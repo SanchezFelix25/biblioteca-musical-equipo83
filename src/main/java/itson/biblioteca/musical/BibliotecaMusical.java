@@ -1,9 +1,9 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
-
 package itson.biblioteca.musical;
 
+import itson.biblioteca.musical.gui.InsertarArtistasForm;
 import itson.biblioteca.musical.gui.RegistroUsuarioForm;
 import javax.swing.SwingUtilities;
 
@@ -14,9 +14,11 @@ import javax.swing.SwingUtilities;
 public class BibliotecaMusical {
 
     public static void main(String[] args) {
-       SwingUtilities.invokeLater(() -> {
+        SwingUtilities.invokeLater(() -> {
             RegistroUsuarioForm form = new RegistroUsuarioForm();
             form.setVisible(true);
-        });  
+            InsertarArtistasForm ventana = new InsertarArtistasForm();
+            ventana.setVisible(true);
+        });
     }
 }
