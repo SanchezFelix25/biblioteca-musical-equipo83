@@ -5,8 +5,12 @@
 package itson.biblioteca.musical.persistencia;
 
 import com.google.gson.Gson;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Sorts;
 import itson.biblioteca.musical.modelo.Cancion;
+import java.util.ArrayList;
+import java.util.List;
 import org.bson.Document;
 
 /**
@@ -27,6 +31,15 @@ public class CancionDAO {
         Document doc = Document.parse(json);
         coleccion.insertOne(doc);
         System.out.println("Canción insertada: " + cancion.getTitulo());
+    }
+
+    public List<Document> obtenerTodos() {
+        List<Document> canciones = new ArrayList<>();
+        FindIterable<Document> resultados = coleccion.find().sort(Sorts.ascending("titulo"));
+        for (Document doc : resultados) {
+            canciones.add(doc);
+        }
+        return canciones;
     }
 
 }

@@ -5,9 +5,13 @@
 package itson.biblioteca.musical.persistencia;
 
 import com.google.gson.Gson;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Sorts;
 import itson.biblioteca.musical.modelo.Artista;
+import java.util.ArrayList;
+import java.util.List;
 import org.bson.Document;
 
 /**
@@ -36,6 +40,15 @@ public class ArtistaDAO {
             return doc.getObjectId("_id").toHexString();
         }
         return null;
+    }
+
+    public List<Document> obtenerTodos() {
+        List<Document> artistas = new ArrayList<>();
+        FindIterable<Document> resultados = coleccion.find().sort(Sorts.ascending("nombre"));
+        for (Document doc : resultados) {
+            artistas.add(doc);
+        }
+        return artistas;
     }
 
 }

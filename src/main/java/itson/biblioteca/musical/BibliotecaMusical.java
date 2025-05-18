@@ -5,6 +5,7 @@ package itson.biblioteca.musical;
 
 import itson.biblioteca.musical.gui.InsertarArtistasForm;
 import itson.biblioteca.musical.gui.RegistroUsuarioForm;
+import itson.biblioteca.musical.gui.BibliotecaPrincipalForm;
 import javax.swing.SwingUtilities;
 
 /**
@@ -19,6 +20,8 @@ public class BibliotecaMusical {
             form.setVisible(true);
             InsertarArtistasForm ventana = new InsertarArtistasForm();
             ventana.setVisible(true);
+            BibliotecaPrincipalForm ventanaNueva = new BibliotecaPrincipalForm();
+            ventanaNueva.setVisible(true);
         });
     }
 }
