@@ -6,6 +6,7 @@ package itson.biblioteca.musical.persistencia;
 
 import com.google.gson.Gson;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 import itson.biblioteca.musical.modelo.Album;
 import org.bson.Document;
 
@@ -28,4 +29,13 @@ public class AlbumDAO {
         coleccion.insertOne(doc);
         System.out.println("Álbum guardado en MongoDB.");
     }
+
+    public String obtenerIdAlbumPorNombre(String nombre) {
+        Document doc = coleccion.find(Filters.eq("nombre", nombre)).first();
+        if (doc != null && doc.containsKey("_id")) {
+            return doc.getObjectId("_id").toHexString();
+        }
+        return null;
+    }
+
 }

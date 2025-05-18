@@ -7,6 +7,7 @@ package itson.biblioteca.musical.gui;
 import itson.biblioteca.musical.modelo.*;
 import itson.biblioteca.musical.persistencia.AlbumDAO;
 import itson.biblioteca.musical.persistencia.ArtistaDAO;
+import itson.biblioteca.musical.persistencia.CancionDAO;
 import java.util.*;
 import javax.swing.JOptionPane;
 
@@ -73,6 +74,8 @@ public class InsertarArtistasForm extends javax.swing.JFrame {
     private void btnInsertarArtistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarArtistasActionPerformed
         // TODO add your handling code here:
         ArtistaDAO dao = new ArtistaDAO();
+        AlbumDAO albumDAO = new AlbumDAO();
+        CancionDAO cancionDAO = new CancionDAO();
 
         // Insertar 15 solistas
         for (int i = 1; i <= 15; i++) {
@@ -89,15 +92,15 @@ public class InsertarArtistasForm extends javax.swing.JFrame {
             Banda b = new Banda("Banda " + i, "Rock", "banda" + i + ".jpg", integrantes);
             dao.insertarArtista(b);
         }
-        // Insertar álbumes para cada artista
-        AlbumDAO albumDAO = new AlbumDAO();
+        // Insertar álbumes y canciones para cada artista
         for (int i = 1; i <= 30; i++) {
             String nombre = (i <= 15) ? "Solista " + i : "Banda " + (i - 15);
             String artistaId = dao.obtenerIdArtistaPorNombre(nombre);
             if (artistaId != null) {
                 for (int j = 1; j <= 2; j++) {
+                    String nombreAlbum = "Álbum " + j + " de " + nombre;
                     Album album = new Album(
-                            "Álbum " + j + " de " + nombre,
+                            nombreAlbum,
                             "2022-01-" + (j + 10),
                             "Pop",
                             "album" + i + "_" + j + ".jpg",
@@ -105,6 +108,14 @@ public class InsertarArtistasForm extends javax.swing.JFrame {
                             List.of("Canción A", "Canción B", "Canción C")
                     );
                     albumDAO.insertarAlbum(album);
+
+                    // Insertar canciones individuales
+                    String albumId = albumDAO.obtenerIdAlbumPorNombre(nombreAlbum);
+                    if (albumId != null) {
+                        cancionDAO.insertarCancion(new Cancion("Canción 1", "3:10", albumId));
+                        cancionDAO.insertarCancion(new Cancion("Canción 2", "2:55", albumId));
+                        cancionDAO.insertarCancion(new Cancion("Canción 3", "4:05", albumId));
+                    }
                 }
             }
         }
