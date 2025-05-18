@@ -4,6 +4,10 @@
  */
 package itson.biblioteca.musical.gui;
 
+import itson.biblioteca.musical.modelo.Usuario;
+import itson.biblioteca.musical.persistencia.UsuarioDAO;
+import java.util.ArrayList;
+
 /**
  *
  * @author Felix_isq
@@ -133,6 +137,10 @@ public class RegistroUsuarioForm extends javax.swing.JFrame {
         System.out.println("Correo: " + correo);
         System.out.println("Contraseña: " + password);
         System.out.println("Imagen: " + imagen);
+
+        Usuario nuevo = new Usuario(usuario, correo, password, imagen, new ArrayList<>(), new ArrayList<>());
+        UsuarioDAO dao = new UsuarioDAO();
+        dao.insertarUsuario(nuevo);
 
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
