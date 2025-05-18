@@ -4,6 +4,9 @@
 
 package itson.biblioteca.musical;
 
+import itson.biblioteca.musical.gui.RegistroUsuarioForm;
+import javax.swing.SwingUtilities;
+
 /**
  *
  * @author Felix_isq
@@ -11,6 +14,9 @@ package itson.biblioteca.musical;
 public class BibliotecaMusical {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+       SwingUtilities.invokeLater(() -> {
+            RegistroUsuarioForm form = new RegistroUsuarioForm();
+            form.setVisible(true);
+        });  
     }
 }

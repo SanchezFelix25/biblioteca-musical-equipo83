@@ -1,4 +1,4 @@
-package modelo;
+package itson.biblioteca.musical.modelo;
 
 import java.util.List;
 
