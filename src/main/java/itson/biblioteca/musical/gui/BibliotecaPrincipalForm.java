@@ -37,11 +37,13 @@ public class BibliotecaPrincipalForm extends JFrame {
     }
 
     private void initComponentes() {
+
         // Panel superior de búsqueda
         panelBusqueda = new JPanel();
         txtBuscar = new JTextField(30);
         cmbTipoBusqueda = new JComboBox<>(new String[]{"Todos", "Artista", "Álbum", "Canción"});
         btnBuscar = new JButton("Buscar");
+        
 
         panelBusqueda.add(new JLabel("Buscar:"));
         panelBusqueda.add(txtBuscar);
@@ -67,8 +69,9 @@ public class BibliotecaPrincipalForm extends JFrame {
 
         // Cargar estructura de las tablas por defecto
         cargarEstructuraTablas();
+        btnBuscar.addActionListener(e -> realizarBusqueda());
     }
-
+    
     private void cargarEstructuraTablas() {
         DefaultTableModel modeloArtistas = new DefaultTableModel(new String[]{"Nombre", "Género", "Tipo"}, 0);
         tablaArtistas.setModel(modeloArtistas);
@@ -95,6 +98,37 @@ public class BibliotecaPrincipalForm extends JFrame {
             String genero = doc.getString("genero");
             String tipo = doc.getString("tipo");
             model.addRow(new Object[]{nombre, genero, tipo});
+        }
+    }
+
+    private void realizarBusqueda() {
+        String texto = txtBuscar.getText().trim().toLowerCase();
+        String tipo = (String) cmbTipoBusqueda.getSelectedItem();
+
+        if (texto.isEmpty()) {
+            return;
+        }
+
+        switch (tipo) {
+            case "Artista" -> {
+                System.out.println("tipo artistas"); 
+                //-> buscarArtistas(texto);
+            }
+            case "Álbum" -> {
+                System.out.println("Tipo album"); 
+              //  buscarAlbumes(texto);
+            }
+            case "Canción" -> { 
+                System.out.println("Tipo de cancion"); 
+                //buscarCanciones(texto);
+            }
+            case "Todos" ->
+            {
+                System.out.println("Tipo de Todos");
+               // buscarArtistas(texto);
+                //buscarAlbumes(texto);
+               // buscarCanciones(texto);
+            }
         }
     }
 
