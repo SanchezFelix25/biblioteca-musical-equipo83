@@ -43,7 +43,6 @@ public class BibliotecaPrincipalForm extends JFrame {
         txtBuscar = new JTextField(30);
         cmbTipoBusqueda = new JComboBox<>(new String[]{"Todos", "Artista", "Álbum", "Canción"});
         btnBuscar = new JButton("Buscar");
-        
 
         panelBusqueda.add(new JLabel("Buscar:"));
         panelBusqueda.add(txtBuscar);
@@ -71,7 +70,7 @@ public class BibliotecaPrincipalForm extends JFrame {
         cargarEstructuraTablas();
         btnBuscar.addActionListener(e -> realizarBusqueda());
     }
-    
+
     private void cargarEstructuraTablas() {
         DefaultTableModel modeloArtistas = new DefaultTableModel(new String[]{"Nombre", "Género", "Tipo"}, 0);
         tablaArtistas.setModel(modeloArtistas);
@@ -107,29 +106,85 @@ public class BibliotecaPrincipalForm extends JFrame {
 
         if (texto.isEmpty()) {
             JOptionPane.showMessageDialog(this, " Por favor, escribe algo para buscar.", "Campo vacío", JOptionPane.WARNING_MESSAGE);
-            
+
             return;
         }
 
         switch (tipo) {
             case "Artista" -> {
-                System.out.println("tipo artistas"); 
-                //-> buscarArtistas(texto);
+                System.out.println("tipo artistas");
+                buscarArtistas(texto);
             }
             case "Álbum" -> {
-                System.out.println("Tipo album"); 
-              //  buscarAlbumes(texto);
+                System.out.println("Tipo album");
+                 buscarAlbumes(texto);
             }
-            case "Canción" -> { 
-                System.out.println("Tipo de cancion"); 
-                //buscarCanciones(texto);
+            case "Canción" -> {
+                System.out.println("Tipo de cancion");
+                buscarCanciones(texto);
             }
-            case "Todos" ->
-            {
+            case "Todos" -> {
                 System.out.println("Tipo de Todos");
-               // buscarArtistas(texto);
-                //buscarAlbumes(texto);
-               // buscarCanciones(texto);
+                buscarArtistas(texto);
+                buscarAlbumes(texto);
+                buscarCanciones(texto);
+            }
+        }
+    }
+
+    private void buscarArtistas(String filtro) {
+        ArtistaDAO dao = new ArtistaDAO();
+        List<Document> artistas = dao.obtenerTodos();
+
+        DefaultTableModel model = (DefaultTableModel) tablaArtistas.getModel();
+        model.setRowCount(0);
+
+        for (Document doc : artistas) {
+            String nombre = doc.getString("nombre").toLowerCase();
+            if (nombre.contains(filtro.toLowerCase())) {
+                model.addRow(new Object[]{
+                    doc.getString("nombre"),
+                    doc.getString("genero"),
+                    doc.getString("tipo")
+                });
+            }
+        }
+    }
+
+    private void buscarAlbumes(String filtro) {
+        AlbumDAO dao = new AlbumDAO();
+        List<Document> albumes = dao.obtenerTodos();
+
+        DefaultTableModel model = (DefaultTableModel) tablaAlbumes.getModel();
+        model.setRowCount(0);
+
+        for (Document doc : albumes) {
+            String nombre = doc.getString("nombre").toLowerCase();
+            if (nombre.contains(filtro.toLowerCase())) {
+                model.addRow(new Object[]{
+                    doc.getString("nombre"),
+                    doc.getString("fechaLanzamiento"),
+                    doc.getString("genero")
+                });
+            }
+        }
+    }
+
+    private void buscarCanciones(String filtro) {
+        CancionDAO dao = new CancionDAO();
+        List<Document> canciones = dao.obtenerTodos();
+
+        DefaultTableModel model = (DefaultTableModel) tablaCanciones.getModel();
+        model.setRowCount(0);
+
+        for (Document doc : canciones) {
+            String titulo = doc.getString("titulo").toLowerCase();
+            if (titulo.contains(filtro.toLowerCase())) {
+                model.addRow(new Object[]{
+                    doc.getString("titulo"),
+                    doc.getString("duracion"),
+                    doc.getString("idAlbum")
+                });
             }
         }
     }
