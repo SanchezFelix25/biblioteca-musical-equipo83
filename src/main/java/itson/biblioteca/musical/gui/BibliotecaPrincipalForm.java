@@ -106,6 +106,8 @@ public class BibliotecaPrincipalForm extends JFrame {
         String tipo = (String) cmbTipoBusqueda.getSelectedItem();
 
         if (texto.isEmpty()) {
+            JOptionPane.showMessageDialog(this, " Por favor, escribe algo para buscar.", "Campo vacío", JOptionPane.WARNING_MESSAGE);
+            
             return;
         }
 
