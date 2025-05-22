@@ -6,6 +6,7 @@ package itson.biblioteca.musical.persistencia;
 
 import com.google.gson.Gson;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 import itson.biblioteca.musical.modelo.Usuario;
 import org.bson.Document;
 
@@ -27,5 +28,9 @@ public class UsuarioDAO {
         Document doc = Document.parse(json);
         coleccion.insertOne(doc);
         System.out.println("Usuario guardado en MongoDB.");
+    }
+    
+    public boolean existeCorreo(String correo) {
+    return coleccion.find(Filters.eq("correo", correo)).first() != null;
     }
 }

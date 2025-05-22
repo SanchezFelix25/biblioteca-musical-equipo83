@@ -1,6 +1,6 @@
-
 package itson.biblioteca.musical.gui;
 
+import com.mongodb.client.model.Filters;
 import itson.biblioteca.musical.modelo.Usuario;
 import itson.biblioteca.musical.persistencia.UsuarioDAO;
 import java.awt.Color;
@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -21,7 +22,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class RegistroUsuarioForm extends javax.swing.JFrame {
 
     private JButton btnSeleccionarImagen;
-   // private JLabel lblImagenPreview;
+    // private JLabel lblImagenPreview;
     private File imagenSeleccionada;
 
     /**
@@ -165,22 +166,45 @@ public class RegistroUsuarioForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
-        String usuario = txtUsuario.getText();
-        String correo = txtCorreo.getText();
+        String usuario = txtUsuario.getText().trim();
+        String correo = txtCorreo.getText().trim();
         String password = new String(txtPassword.getPassword());
         String imagen = (imagenSeleccionada != null) ? imagenSeleccionada.getAbsolutePath() : null;
 
-        System.out.println("Usuario: " + usuario);
-        System.out.println("Correo: " + correo);
-        System.out.println("Contraseña: " + password);
-        System.out.println("Imagen: " + imagen);
+        if (usuario.isEmpty() || correo.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor completa todos los campos.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        UsuarioDAO dao = new UsuarioDAO();
+
+        if (dao.existeCorreo(correo)) {
+            JOptionPane.showMessageDialog(this, "️ El correo ya está registrado. Usa otro.", "Correo existente", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         Usuario nuevo = new Usuario(usuario, correo, password, imagen, new ArrayList<>(), new ArrayList<>());
-        UsuarioDAO dao = new UsuarioDAO();
         dao.insertarUsuario(nuevo);
 
+        JOptionPane.showMessageDialog(this, " Usuario registrado exitosamente.", "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
+
+        limpiarFormulario();
+
+        // Aquí se pasa el objeto usuario al perfil
+        PerfilUsuarioForm perfil = new PerfilUsuarioForm(nuevo);
+        perfil.setVisible(true);
+
+        this.dispose(); // opcional: cierra la ventana de registro
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void limpiarFormulario() {
+        txtUsuario.setText("");
+        txtCorreo.setText("");
+        txtPassword.setText("");
+        lblImagenPreview.setIcon(null);
+        imagenSeleccionada = null;
+    }
+
 
     private void btnSeleccionarImagen(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImagen
         // TODO add your handling code here:
