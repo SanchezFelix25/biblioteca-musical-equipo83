@@ -13,16 +13,24 @@ import javax.swing.ImageIcon;
  * @author Felix_isq
  */
 public class PerfilUsuarioForm extends javax.swing.JFrame {
-
+    private Usuario usuario;
+    
+    
     /**
      * Creates new form PerfilUsuarioForm
      * @param usuario
      */
     public PerfilUsuarioForm(Usuario usuario) {
+        this.usuario = usuario;
         initComponents();
         cargarDatos(usuario);
     }
 
+    public PerfilUsuarioForm() {
+        initComponents();
+        cargarDatos(usuario);
+    }
+    
     private void cargarDatos(Usuario usuario) {
         lblNombreUsuario.setText("Nombre: " + usuario.getUsuario());
         lblCorreoUsuario.setText("Correo: " + usuario.getCorreo());
@@ -50,12 +58,21 @@ public class PerfilUsuarioForm extends javax.swing.JFrame {
         lblImagenPerfil = new javax.swing.JLabel();
         lblNombreUsuario = new javax.swing.JLabel();
         lblCorreoUsuario = new javax.swing.JLabel();
+        btnRestricciones = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lblNombreUsuario.setText("jLabel2");
 
         lblCorreoUsuario.setText("jLabel3");
+
+        btnRestricciones.setText("Restricciones");
+        btnRestricciones.setName("btnRestricciones"); // NOI18N
+        btnRestricciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRestriccionesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -67,7 +84,8 @@ public class PerfilUsuarioForm extends javax.swing.JFrame {
                         .addGap(71, 71, 71)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblNombreUsuario)
-                            .addComponent(lblCorreoUsuario)))
+                            .addComponent(lblCorreoUsuario)
+                            .addComponent(btnRestricciones)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addComponent(lblImagenPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -82,11 +100,19 @@ public class PerfilUsuarioForm extends javax.swing.JFrame {
                 .addComponent(lblNombreUsuario)
                 .addGap(35, 35, 35)
                 .addComponent(lblCorreoUsuario)
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addGap(56, 56, 56)
+                .addComponent(btnRestricciones)
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRestriccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestriccionesActionPerformed
+        // TODO add your handling code here:
+        new GenerosNoDeseadosForm(usuario).setVisible(true);
+
+    }//GEN-LAST:event_btnRestriccionesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -118,12 +144,13 @@ public class PerfilUsuarioForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-              //  new PerfilUsuarioForm().setVisible(true);
+              new PerfilUsuarioForm().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRestricciones;
     private javax.swing.JLabel lblCorreoUsuario;
     private javax.swing.JLabel lblImagenPerfil;
     private javax.swing.JLabel lblNombreUsuario;

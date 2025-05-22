@@ -6,6 +6,7 @@ import com.mongodb.client.model.Filters;
 import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 
 /**
@@ -49,5 +50,30 @@ public class FavoritoDAO {
         return coleccion.find(Filters.eq("idUsuario", idUsuario))
                         .into(new ArrayList<>());
     }
+    
+    public int eliminarFavoritosPorGenero(String correo, String genero) {
+    // Primero busca todos los favoritos del usuario
+    List<Document> favoritos = coleccion.find(Filters.eq("idUsuario", correo)).into(new ArrayList<>());
+    int eliminados = 0;
+    for (Document fav : favoritos) {
+        String tipo = fav.getString("tipo");
+        String id = fav.getString("idElemento");
+
+        Document referencia = null;
+        if (tipo.equals("artista")) {
+            referencia = MongoDBConnection.getDatabase().getCollection("artistas").find(Filters.eq("_id", new ObjectId(id))).first();
+        } else if (tipo.equals("álbum")) {
+            referencia = MongoDBConnection.getDatabase().getCollection("albumes").find(Filters.eq("_id", new ObjectId(id))).first();
+        } else if (tipo.equals("canción")) {
+            referencia = MongoDBConnection.getDatabase().getCollection("canciones").find(Filters.eq("_id", new ObjectId(id))).first();
+        }
+
+        if (referencia != null && genero.equalsIgnoreCase(referencia.getString("genero"))) {
+            coleccion.deleteOne(Filters.eq("_id", fav.getObjectId("_id")));
+            eliminados++;
+        }
+    }
+    return eliminados;
+}
 
 }

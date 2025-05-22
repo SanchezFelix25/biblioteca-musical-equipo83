@@ -7,8 +7,12 @@ package itson.biblioteca.musical.persistencia;
 import com.google.gson.Gson;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 import itson.biblioteca.musical.modelo.Usuario;
+import java.util.ArrayList;
+import java.util.List;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -33,4 +37,14 @@ public class UsuarioDAO {
     public boolean existeCorreo(String correo) {
     return coleccion.find(Filters.eq("correo", correo)).first() != null;
     }
+    
+    public void actualizarGenerosNoDeseados(String correo, List<String> generos) {
+    coleccion.updateOne(
+        Filters.eq("correo", correo),
+        Updates.set("generosNoDeseados", generos)
+        );
+    }
+    
+    
+    
 }
