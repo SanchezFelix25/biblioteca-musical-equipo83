@@ -1,12 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package itson.biblioteca.musical.gui;
 
 import itson.biblioteca.musical.modelo.Usuario;
 import itson.biblioteca.musical.persistencia.UsuarioDAO;
+import java.awt.Color;
+import java.awt.Image;
+import java.io.File;
 import java.util.ArrayList;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -14,11 +20,16 @@ import java.util.ArrayList;
  */
 public class RegistroUsuarioForm extends javax.swing.JFrame {
 
+    private JButton btnSeleccionarImagen;
+    private JLabel lblImagenPreview;
+    private File imagenSeleccionada;
+
     /**
      * Creates new form RegistroUsuarioForm
      */
     public RegistroUsuarioForm() {
         initComponents();
+        lblImagenPreview.setBorder(BorderFactory.createLineBorder(Color.GRAY));
     }
 
     /**
@@ -40,9 +51,10 @@ public class RegistroUsuarioForm extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         txtCorreo = new javax.swing.JTextField();
-        txtImagen = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         txtPassword = new javax.swing.JPasswordField();
+        lblImagenPerfil = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
 
         jButton2.setText("jButton2");
 
@@ -71,13 +83,21 @@ public class RegistroUsuarioForm extends javax.swing.JFrame {
 
         txtCorreo.setName("txtCorreo"); // NOI18N
 
-        txtImagen.setName("txtImagen"); // NOI18N
-
         jButton1.setText("Registrar");
         jButton1.setName("btnRegistrar"); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarActionPerformed(evt);
+            }
+        });
+
+        lblImagenPerfil.setName("lblImagenPreview"); // NOI18N
+
+        jButton6.setText("Seleccionar Imagen");
+        jButton6.setName("btnSeleccionarImagen"); // NOI18N
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionarImagen(evt);
             }
         });
 
@@ -93,19 +113,23 @@ public class RegistroUsuarioForm extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(jLabel1)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3)
-                            .addComponent(txtCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
-                            .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)
-                            .addComponent(txtPassword)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(48, 48, 48)
+                        .addComponent(jButton1)
+                        .addGap(84, 84, 84)
+                        .addComponent(jButton6))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1))))
-                .addGap(283, 283, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(lblImagenPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel3)
+                                .addComponent(txtCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
+                                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel4)
+                                .addComponent(txtPassword)))))
+                .addContainerGap(283, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,9 +149,11 @@ public class RegistroUsuarioForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(lblImagenPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
 
@@ -143,7 +169,7 @@ public class RegistroUsuarioForm extends javax.swing.JFrame {
         String usuario = txtUsuario.getText();
         String correo = txtCorreo.getText();
         String password = new String(txtPassword.getPassword());
-        String imagen = txtImagen.getText();
+        String imagen = (imagenSeleccionada != null) ? imagenSeleccionada.getAbsolutePath() : null;
 
         System.out.println("Usuario: " + usuario);
         System.out.println("Correo: " + correo);
@@ -155,6 +181,28 @@ public class RegistroUsuarioForm extends javax.swing.JFrame {
         dao.insertarUsuario(nuevo);
 
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void btnSeleccionarImagen(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImagen
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Imágenes", "jpg", "jpeg", "png");
+        fileChooser.setFileFilter(filtro);
+
+        int resultado = fileChooser.showOpenDialog(this);
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            imagenSeleccionada = fileChooser.getSelectedFile();
+            ImageIcon icono = new ImageIcon(imagenSeleccionada.getAbsolutePath());
+
+            // Escalar imagen al tamaño del JLabel
+            Image imagenEscalada = icono.getImage().getScaledInstance(
+                    lblImagenPreview.getWidth(),
+                    lblImagenPreview.getHeight(),
+                    Image.SCALE_SMOOTH
+            );
+            lblImagenPreview.setIcon(new ImageIcon(imagenEscalada));
+        }
+
+    }//GEN-LAST:event_btnSeleccionarImagen
 
     /**
      * @param args the command line arguments
@@ -197,12 +245,13 @@ public class RegistroUsuarioForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel lblImagenPerfil;
     private javax.swing.JTextField txtCorreo;
-    private javax.swing.JTextField txtImagen;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
