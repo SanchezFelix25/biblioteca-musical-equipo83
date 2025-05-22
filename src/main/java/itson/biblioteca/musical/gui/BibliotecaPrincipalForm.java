@@ -21,6 +21,14 @@ public class BibliotecaPrincipalForm extends JFrame {
     private JTable tablaAlbumes;
     private JTable tablaCanciones;
     private JTable tablaFavoritos;
+    
+    private JButton btnFavoritoArtista;
+    private JButton btnFavoritoAlbum;
+    private JButton btnFavoritoCancion;
+    
+    
+   
+
 
     public BibliotecaPrincipalForm() {
         setTitle("Biblioteca Musical");
@@ -55,20 +63,45 @@ public class BibliotecaPrincipalForm extends JFrame {
         tabbedPane = new JTabbedPane();
 
         tablaArtistas = new JTable();
+        
+         // 🔹 Panel de ARTISTAS
+        tablaArtistas = new JTable();
+        btnFavoritoArtista = new JButton(" Marcar/Desmarcar como Favorito");
+        JPanel panelArtistas = new JPanel(new BorderLayout());
+        panelArtistas.add(new JScrollPane(tablaArtistas), BorderLayout.CENTER);
+        panelArtistas.add(btnFavoritoArtista, BorderLayout.SOUTH);
+        tabbedPane.addTab("Artistas", panelArtistas);
+        
         tablaAlbumes = new JTable();
         tablaCanciones = new JTable();
         tablaFavoritos = new JTable();
 
-        tabbedPane.addTab("Artistas", new JScrollPane(tablaArtistas));
-        tabbedPane.addTab("Álbumes", new JScrollPane(tablaAlbumes));
-        tabbedPane.addTab("Canciones", new JScrollPane(tablaCanciones));
-        tabbedPane.addTab("Favoritos", new JScrollPane(tablaFavoritos));
+        //tabbedPane.addTab("Artistas", new JScrollPane(tablaArtistas));
+        //tabbedPane.addTab("Álbumes", new JScrollPane(tablaAlbumes));
+      ///  tabbedPane.addTab("Canciones", new JScrollPane(tablaCanciones));
+        
 
+    // Panel de Álbumes
+        JPanel panelAlbumes = new JPanel(new BorderLayout());
+        panelAlbumes.add(new JScrollPane(tablaAlbumes), BorderLayout.CENTER);
+        btnFavoritoAlbum = new JButton(" Marcar/Desmarcar como Favorito");
+        panelAlbumes.add(btnFavoritoAlbum, BorderLayout.SOUTH);
+        tabbedPane.addTab("Álbumes", panelAlbumes);
+
+    // Panel de Canciones
+        JPanel panelCanciones = new JPanel(new BorderLayout());
+        panelCanciones.add(new JScrollPane(tablaCanciones), BorderLayout.CENTER);
+        btnFavoritoCancion = new JButton("️ Marcar/Desmarcar como Favorito");
+        panelCanciones.add(btnFavoritoCancion, BorderLayout.SOUTH);
+        tabbedPane.addTab("Canciones", panelCanciones);
+        
+        tabbedPane.addTab("Favoritos", new JScrollPane(tablaFavoritos));
         add(tabbedPane, BorderLayout.CENTER);
 
         // Cargar estructura de las tablas por defecto
         cargarEstructuraTablas();
         btnBuscar.addActionListener(e -> realizarBusqueda());
+        
     }
 
     private void cargarEstructuraTablas() {
