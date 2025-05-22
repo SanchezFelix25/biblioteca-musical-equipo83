@@ -33,18 +33,37 @@ public class UsuarioDAO {
         coleccion.insertOne(doc);
         System.out.println("Usuario guardado en MongoDB.");
     }
-    
+
     public boolean existeCorreo(String correo) {
-    return coleccion.find(Filters.eq("correo", correo)).first() != null;
+        return coleccion.find(Filters.eq("correo", correo)).first() != null;
     }
-    
+
     public void actualizarGenerosNoDeseados(String correo, List<String> generos) {
-    coleccion.updateOne(
-        Filters.eq("correo", correo),
-        Updates.set("generosNoDeseados", generos)
+        coleccion.updateOne(
+                Filters.eq("correo", correo),
+                Updates.set("generosNoDeseados", generos)
         );
     }
-    
-    
-    
+
+    public Usuario obtenerUsuarioPorCorreoYContrasena(String correo, String contrasena) {
+        Document doc = coleccion.find(
+                Filters.and(
+                        Filters.eq("correo", correo),
+                        Filters.eq("password", contrasena) // en producción deberías usar hash
+                )
+        ).first();
+
+        if (doc != null) {
+            return new Usuario(
+                    doc.getString("usuario"),
+                    doc.getString("correo"),
+                    doc.getString("password"),
+                    doc.getString("imagen"),
+                    doc.getList("favoritos", String.class),
+                    doc.getList("generosNoDeseados", String.class)
+            );
+        }
+        return null;
+    }
+
 }

@@ -22,11 +22,13 @@ public class PerfilUsuarioForm extends javax.swing.JFrame {
      */
     public PerfilUsuarioForm(Usuario usuario) {
         this.usuario = usuario;
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         initComponents();
         cargarDatos(usuario);
     }
 
     public PerfilUsuarioForm() {
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         initComponents();
         cargarDatos(usuario);
     }

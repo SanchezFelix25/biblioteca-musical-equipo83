@@ -1,5 +1,6 @@
 package itson.biblioteca.musical.gui;
 
+import itson.biblioteca.musical.modelo.Usuario;
 import itson.biblioteca.musical.persistencia.AlbumDAO;
 import itson.biblioteca.musical.persistencia.ArtistaDAO;
 import itson.biblioteca.musical.persistencia.CancionDAO;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class BibliotecaPrincipalForm extends JFrame {
 
-    private String usuarioAutenticadoId = "123abc";  // ejemplo fijo
+    private String usuarioAutenticadoId;  // ejemplo fijo
     private JTabbedPane tabbedPane;
     private JPanel panelBusqueda;
     private JTextField txtBuscar;
@@ -29,13 +30,13 @@ public class BibliotecaPrincipalForm extends JFrame {
     private JButton btnFavoritoCancion;
     private JButton btnQuitarFavorito;
     
-    public BibliotecaPrincipalForm() {
+    public BibliotecaPrincipalForm(Usuario usuario) {
         setTitle("Biblioteca Musical");
         setSize(900, 600);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
-
+        this.usuarioAutenticadoId = usuario.getId();
         initComponentes();
 
         cargarArtistas(); // Carga inicial de artistas desde MongoDB
@@ -44,6 +45,15 @@ public class BibliotecaPrincipalForm extends JFrame {
         cargarFavoritos(usuarioAutenticadoId);
     }
 
+       public BibliotecaPrincipalForm() {
+        setTitle("Biblioteca Musical");
+        setSize(900, 600);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setLayout(new BorderLayout());
+      
+        initComponentes();
+    }
     private void initComponentes() {
 
         // Panel superior de búsqueda
