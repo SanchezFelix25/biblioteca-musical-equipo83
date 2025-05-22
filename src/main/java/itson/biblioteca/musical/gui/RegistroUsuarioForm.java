@@ -21,7 +21,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class RegistroUsuarioForm extends javax.swing.JFrame {
 
     private JButton btnSeleccionarImagen;
-    private JLabel lblImagenPreview;
+   // private JLabel lblImagenPreview;
     private File imagenSeleccionada;
 
     /**
@@ -29,7 +29,6 @@ public class RegistroUsuarioForm extends javax.swing.JFrame {
      */
     public RegistroUsuarioForm() {
         initComponents();
-        lblImagenPreview.setBorder(BorderFactory.createLineBorder(Color.GRAY));
     }
 
     /**
@@ -53,7 +52,7 @@ public class RegistroUsuarioForm extends javax.swing.JFrame {
         txtCorreo = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         txtPassword = new javax.swing.JPasswordField();
-        lblImagenPerfil = new javax.swing.JLabel();
+        lblImagenPreview = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
 
         jButton2.setText("jButton2");
@@ -91,7 +90,8 @@ public class RegistroUsuarioForm extends javax.swing.JFrame {
             }
         });
 
-        lblImagenPerfil.setName("lblImagenPreview"); // NOI18N
+        lblImagenPreview.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblImagenPreview.setName(""); // NOI18N
 
         jButton6.setText("Seleccionar Imagen");
         jButton6.setName("btnSeleccionarImagen"); // NOI18N
@@ -122,7 +122,7 @@ public class RegistroUsuarioForm extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
-                                .addComponent(lblImagenPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lblImagenPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel3)
                                 .addComponent(txtCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
@@ -149,7 +149,7 @@ public class RegistroUsuarioForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblImagenPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblImagenPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -250,7 +250,7 @@ public class RegistroUsuarioForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel lblImagenPerfil;
+    private javax.swing.JLabel lblImagenPreview;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsuario;
