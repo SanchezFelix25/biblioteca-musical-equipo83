@@ -1,11 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package itson.biblioteca.musical.persistencia;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
+import java.util.ArrayList;
+import java.util.List;
 import org.bson.Document;
 
 
@@ -44,6 +43,11 @@ public class FavoritoDAO {
                 Filters.eq("tipo", tipo),
                 Filters.eq("idElemento", idElemento)
         )).first() != null;
+    }
+    
+    public List<Document> obtenerFavoritosPorUsuario(String idUsuario) {
+        return coleccion.find(Filters.eq("idUsuario", idUsuario))
+                        .into(new ArrayList<>());
     }
 
 }

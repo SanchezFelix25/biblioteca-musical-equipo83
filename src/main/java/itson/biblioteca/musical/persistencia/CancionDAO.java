@@ -7,11 +7,13 @@ package itson.biblioteca.musical.persistencia;
 import com.google.gson.Gson;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
 import itson.biblioteca.musical.modelo.Cancion;
 import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -40,6 +42,15 @@ public class CancionDAO {
             canciones.add(doc);
         }
         return canciones;
+    }
+    
+    public String obtenerIdCancionPorTitulo(String titulo) {
+        Document doc = coleccion.find(Filters.eq("titulo", titulo)).first();
+        if (doc != null && doc.containsKey("_id")) {
+            ObjectId id = doc.getObjectId("_id");
+            return id.toHexString(); // Regresa el ID como cadena
+        }
+        return null;
     }
 
 }
